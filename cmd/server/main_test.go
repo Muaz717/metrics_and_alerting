@@ -40,7 +40,8 @@ func TestMetricsHandler(t *testing.T) {
 			w := httptest.NewRecorder()
 			handleMetric(w, request)
 			res := w.Result()
-
+			defer res.Body.Close()
+			
 			assert.Equal(t, test.want.code, res.StatusCode)
 		})
 	}
