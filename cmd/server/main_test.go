@@ -16,7 +16,7 @@ func metricRouter() chi.Router {
 	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
-	r.Get("/update/{metricType}/{name}", giveValue)
+	r.Get("/value/{metricType}/{name}", giveValue)
 
 	return r
 }
@@ -34,7 +34,7 @@ func TestMetricsHandler(t *testing.T) {
 		{"/update/counter/Counter1/11", http.MethodPost, "text/plain; charset=utf-8", http.StatusOK, ""},
 		{"/update/gauge/Gauge1/21.1", http.MethodPost, "text/plain; charset=utf-8", http.StatusOK, ""},
 		{"/update/counter/Counter1/12", http.MethodPost, "text/plain; charset=utf-8", http.StatusOK, ""},
-		{"/update/counter/Counter1", http.MethodGet, "text/plain; charset=utf-8", http.StatusOK, "23"},
+		{"/value/counter/Counter1", http.MethodGet, "text/plain; charset=utf-8", http.StatusOK, "23"},
 	}
 
 	for _, test := range tests {

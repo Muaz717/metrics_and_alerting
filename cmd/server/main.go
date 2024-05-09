@@ -1,11 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"strconv"
-
 
 	"github.com/go-chi/chi/v5"
 )
@@ -31,14 +31,24 @@ var storage = &MemStorage{
 func main() {
 	r := chi.NewRouter()
 
-
+	r.Get("/", giveHTML)
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
 	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
-	r.Get("/update/{metricType}/{name}", giveValue)
+	r.Get("/value/{metricType}/{name}", giveValue)
 
 
 	log.Fatal(http.ListenAndServe(":8080", r))
+}
+
+func giveHTML(w http.ResponseWriter, r *http.Request){
+	for name, value := range storage.Counters{
+		fmt.Fprintf(w, "%s: %d\n", name, value)
+	}
+
+	for name, value := range storage.Gauges{
+		fmt.Fprintf(w, "%s: %f\n", name, value)
+	}
 }
 
 func handleWrongType(w http.ResponseWriter, r *http.Request) {
