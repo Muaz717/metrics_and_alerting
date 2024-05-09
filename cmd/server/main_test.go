@@ -13,9 +13,10 @@ import (
 func metricRouter() chi.Router {
 	r := chi.NewRouter()
 
+	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
-	r.Get("/update/{metric_type}/{name}", giveValue)
+	r.Get("/update/{metricType}/{name}", giveValue)
 
 	return r
 }

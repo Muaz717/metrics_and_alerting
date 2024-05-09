@@ -31,10 +31,10 @@ var storage = &MemStorage{
 func main() {
 	r := chi.NewRouter()
 
-	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
+
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
-
+	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
 	r.Get("/update/{metricType}/{name}", giveValue)
 
 
