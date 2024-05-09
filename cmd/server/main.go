@@ -31,6 +31,7 @@ var storage = &MemStorage{
 func main() {
 	r := chi.NewRouter()
 
+	r.Post("/update/{metricType}/{name}/{value}", handleWrongType)
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
 
@@ -38,6 +39,15 @@ func main() {
 
 
 	log.Fatal(http.ListenAndServe(":8080", r))
+}
+
+func handleWrongType(w http.ResponseWriter, r *http.Request) {
+	metricType := chi.URLParam(r, "metricType")
+
+	if metricType != "gauge" && metricType != "counter"{
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 }
 
 func handleCounter(w http.ResponseWriter, r *http.Request){
