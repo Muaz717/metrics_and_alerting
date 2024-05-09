@@ -34,7 +34,7 @@ func main() {
 	r.Post("/update/counter/{name}/{value}", handleCounter)
 	r.Post("/update/gauge/{name}/{value}", handleGauge)
 
-	r.Get("/update/{metric_type}/{name}", giveValue)
+	r.Get("/update/{metricType}/{name}", giveValue)
 
 
 	log.Fatal(http.ListenAndServe(":8080", r))
@@ -73,10 +73,10 @@ func handleGauge(w http.ResponseWriter, r *http.Request) {
 }
 
 func giveValue(w http.ResponseWriter, r *http.Request) {
-	metric_type := chi.URLParam(r, "metric_type")
+	metricType := chi.URLParam(r, "metricType")
 	name := chi.URLParam(r, "name")
 
-	switch metric_type{
+	switch metricType{
 	case "counter":
 		if _, ok := storage.Counters[name]; !ok{
 			w.WriteHeader(http.StatusNotFound)
