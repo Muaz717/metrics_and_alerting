@@ -9,7 +9,7 @@ var flags struct{
 }
 
 func parseFlagsAgent() {
-	flag.StringVar(&flags.flagRunAddr, "a", ":8080", "port to send requests")
+	flag.StringVar(&flags.flagRunAddr, "a", "localhost:8080", "port to send requests")
 	flag.IntVar(&flags.flagRepotInterval, "r", 10, "set rerpot interval")
 	flag.IntVar(&flags.flagPollInterval, "p", 2, "set poll interval")
 

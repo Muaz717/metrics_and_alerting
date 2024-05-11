@@ -13,7 +13,7 @@ import (
 const (
     pollInterval   = 2
     reportInterval = 10
-    serverAddress  = "http://localhost"
+    serverAddress  = "http://"
 )
 
 var pollCount int64
