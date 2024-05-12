@@ -23,7 +23,6 @@ func updateMetrics(metrics *map[string]float64) {
 	metric := new(runtime.MemStats)
 	runtime.ReadMemStats(metric)
 
-
 	for {
 		pollCount++
 		randomValue = rand.Float64()
